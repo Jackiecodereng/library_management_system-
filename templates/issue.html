@@ -1,0 +1,32 @@
+{% extends 'master.html' %}
+{% block title %}
+    <title>Issue Books</title>
+{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-sm-8">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Issue{{ book.title }}by{{ book.author }}</h6>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'issue_books' book.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="input-id" class="form-label">Select Student</label>
+                        
+                            <select  id="input-id" class="form-select form-select-lg mb-3 w-100" name="student_id" aria-label="Default select example">
+                               {% for student in trainees %}
+                               	<option value="{{ student.id }}">{{ student.adm_no }} {{ student.name }}</option>
+                               {% endfor %}
+                            
+                            </select>
+                        </div>
+                    <button type="submit" class="btn btn-primary">Issue Book</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

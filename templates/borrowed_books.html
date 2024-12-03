@@ -1,0 +1,87 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block title %}
+    <title>Borrowed Books</title>
+{% endblock %}
+{% block extra_css %}
+
+    <!-- Custom styles for this page -->
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+    <p class="mb-4">All borrowed books.</p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Library Books</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Student</th>
+                        <th>Status</th>
+                        <th>Expected Return Date</th>
+                        <th>Borrowed Date</th>
+                        <th>Return</th>
+                         <th>lost</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>Title</th>
+                        <th>Student</th>
+                        <th>Status</th>
+                        <th>Expected Return Date</th>
+                        <th>Borrowed Date</th>
+                        <th>Return</th>
+                        <th>lost</th>
+
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {% for  item in borrowed_items %}
+                        <tr>
+                            <td>{{ item.book.title }}</td>
+                            <td>{{ item.student.name }}</td>
+                            <td>{{ item.status }}</td>
+                            <td>{{ item.expected_return_date |date:"d-m-Y" }}</td>
+                            <td>{{ item.created_at |date:"d-m-Y" }}</td>
+                            <td>
+                                <a href="{% url 'return_book' item.id %}" class="btn btn-outline-dark btn-sm">Return</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'lost_book' item.id %}" class="btn btn-outline-danger btn-sm">Lost</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block extra_js %}
+
+    <!-- Page level plugins -->
+    <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+
+{% endblock %}
